@@ -396,16 +396,16 @@ deps = {
     'dep_type': 'cipd',
     'condition': 'host_os == "win" and download_dart_sdk'
   },
-  'src/flutter/prebuilts/windows-arm64/dart-sdk': {
-    'packages': [
-      {
-        'package': 'flutter/dart-sdk/windows-arm64',
-        'version': 'git_revision:'+Var('dart_revision')
-      }
-    ],
-    'dep_type': 'cipd',
-    'condition': 'host_os == "win" and download_dart_sdk and not release_candidate'
-  },
+  # 'src/flutter/prebuilts/windows-arm64/dart-sdk': {
+  #   'packages': [
+  #     {
+  #       'package': 'flutter/dart-sdk/windows-arm64',
+  #       'version': 'git_revision:'+Var('dart_revision')
+  #     }
+  #   ],
+  #   'dep_type': 'cipd',
+  #   'condition': 'host_os == "win" and download_dart_sdk and not release_candidate'
+  # },
 
   'src/third_party/colorama/src':
    Var('chromium_git') + '/external/colorama.git' + '@' + '799604a1041e9b3bc5d2789ecbd7e8db2e18e6b8',
