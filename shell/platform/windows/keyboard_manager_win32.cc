@@ -257,6 +257,9 @@ bool KeyboardManagerWin32::HandleMessage(UINT const action,
       const bool extended = ((lparam >> 24) & 0x01) == 0x01;
       // If the key is a modifier, get its side.
       const uint16_t key_code = ResolveKeyCode(wparam, extended, scancode);
+      if (key_code == 161 || key_code == 160 || key_code == 91) {
+        return false;
+      }
       const bool was_down = lparam & 0x40000000;
 
       // Detect a pattern of key events in order to forge a CtrlLeft up event.
