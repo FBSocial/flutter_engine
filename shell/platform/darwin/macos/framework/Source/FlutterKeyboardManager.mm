@@ -113,7 +113,7 @@ typedef _Nullable _NSResponderPtr (^NextResponderProvider)();
   NextResponderProvider _getNextResponder;
 }
 
-- (nonnull instancetype)initWithViewDelegate:(nonnull id<FlutterKeyboardViewDelegate>)viewDelegate {
+- (nonnull instancetype)initWithViewDelegate:(nonnull id<FlutterKeyboardViewDelegate, FlutterChannelKeyResponderDelegate>)viewDelegate {
   self = [super init];
   if (self != nil) {
     _processingEvent = FALSE;
@@ -128,14 +128,15 @@ typedef _Nullable _NSResponderPtr (^NextResponderProvider)();
                                                        callback:callback
                                                        userData:userData];
                                   }]];
-    [self
-        addPrimaryResponder:[[FlutterChannelKeyResponder alloc]
-                                initWithChannel:[FlutterBasicMessageChannel
-                                                    messageChannelWithName:@"flutter/keyevent"
-                                                           binaryMessenger:[_viewDelegate
-                                                                               getBinaryMessenger]
-                                                                     codec:[FlutterJSONMessageCodec
-                                                                               sharedInstance]]]];
+      FlutterChannelKeyResponder *channelKeyResponder = [[FlutterChannelKeyResponder alloc]
+                                                         initWithChannel:[FlutterBasicMessageChannel
+                                                                             messageChannelWithName:@"flutter/keyevent"
+                                                                                    binaryMessenger:[_viewDelegate
+                                                                                                        getBinaryMessenger]
+                                                                                              codec:[FlutterJSONMessageCodec
+                                                                                                     sharedInstance]]];
+    channelKeyResponder.delegate = viewDelegate;
+    [self addPrimaryResponder:channelKeyResponder];
     _pendingEvents = [[NSMutableArray alloc] init];
     _layoutMap = [NSMutableDictionary<NSNumber*, NSNumber*> dictionary];
     [self buildLayout];

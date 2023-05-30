@@ -11,6 +11,7 @@
 #import "flutter/shell/platform/darwin/common/framework/Headers/FlutterCodecs.h"
 #import "flutter/shell/platform/darwin/macos/framework/Headers/FlutterAppDelegate.h"
 #import "flutter/shell/platform/darwin/macos/framework/Headers/FlutterEngine.h"
+#import "flutter/shell/platform/darwin/macos/framework/Source/FlutterChannelKeyResponder.h"
 #import "flutter/shell/platform/darwin/macos/framework/Source/FlutterEngine_Internal.h"
 #import "flutter/shell/platform/darwin/macos/framework/Source/FlutterKeyPrimaryResponder.h"
 #import "flutter/shell/platform/darwin/macos/framework/Source/FlutterKeyboardManager.h"
@@ -169,7 +170,7 @@ NSData* currentKeyboardLayoutData() {
 /**
  * Private interface declaration for FlutterViewController.
  */
-@interface FlutterViewController () <FlutterViewReshapeListener>
+@interface FlutterViewController () <FlutterViewReshapeListener, FlutterChannelKeyResponderDelegate>
 
 /**
  * The tracking area used to generate hover events, if enabled.
@@ -869,6 +870,11 @@ static void CommonInit(FlutterViewController* controller) {
       _mouseState.last_scroll_momentum_changed_time = 0;
     }
   }
+}
+
+#pragma mark -FlutterChannelKeyResponderDelegate
+- (BOOL)hasMarkedText {
+  return [_textInputPlugin hasMarkedText];
 }
 
 @end

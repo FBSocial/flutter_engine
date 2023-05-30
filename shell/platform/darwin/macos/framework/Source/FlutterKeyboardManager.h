@@ -5,6 +5,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "flutter/shell/platform/darwin/macos/framework/Source/FlutterKeyboardViewDelegate.h"
+#import "flutter/shell/platform/darwin/macos/framework/Source/FlutterChannelKeyResponder.h"
 
 /**
  * Processes keyboard events and cooperate with |TextInputPlugin|.
@@ -29,7 +30,7 @@
  * The |viewDelegate| is a weak reference, typically implemented by
  * |FlutterViewController|.
  */
-- (nonnull instancetype)initWithViewDelegate:(nonnull id<FlutterKeyboardViewDelegate>)viewDelegate;
+- (nonnull instancetype)initWithViewDelegate:(nonnull id<FlutterKeyboardViewDelegate, FlutterChannelKeyResponderDelegate>)viewDelegate;
 
 /**
  * Processes a key event.
